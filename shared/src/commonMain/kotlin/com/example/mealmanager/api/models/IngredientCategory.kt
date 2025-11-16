@@ -4,11 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Meal(
+data class IngredientCategory(
     val id: String,
     @SerialName("user_id") val userId: String,
     val name: String,
-    val description: String? = null,
-    @SerialName("created_at") val createdAt: String,
-    @SerialName("updated_at") val updatedAt: String
+    @SerialName("created_at") val createdAt: String
 )
