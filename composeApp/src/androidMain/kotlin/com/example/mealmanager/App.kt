@@ -16,7 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.mealmanager.screens.LoginScreen
+import com.example.mealmanager.viewmodels.AuthViewModel
+import com.example.mealmanager.viewmodels.TestViewModel
+import com.example.mealmanager.viewmodels.testViewModelFactory
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -26,13 +32,26 @@ import mealmanager.composeapp.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
+    val authViewModelFactory = viewModelFactory {
+        initializer {
+            AuthViewModel(
+                supabaseUrl = BuildConfig.SUPABASE_URL,
+                supabaseKey = BuildConfig.SUPABASE_KEY
+            )
+        }
+    }
+
+    val authViewModel: AuthViewModel = viewModel(
+        factory = authViewModelFactory
+    )
+
     MaterialTheme {
         Scaffold { innerPadding ->
             Box(
                 modifier = Modifier
                     .padding(innerPadding)
             ) {
-                LoginScreen()
+                LoginScreen(authViewModel)
             }
         }
     }
